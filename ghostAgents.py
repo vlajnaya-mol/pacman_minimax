@@ -15,11 +15,11 @@
 
 from game import Agent
 from game import Actions
+import random
 from game import Directions
 import random
 from util import manhattanDistance
 import util
-from multiAgents import betterEvaluationFunction
 
 
 class GhostAgent(Agent):
@@ -48,13 +48,21 @@ class RandomGhost(GhostAgent):
         return dist
 
 
+def ghostEvanuationFunction(currentGameState):
+    if currentGameState.isLose():
+        return 1
+    return -sum([manhattanDistance(currentGameState.getPacmanPosition(), ghost.getPosition())
+                for ghost in currentGameState.getGhostStates()])
 
-class MiniMaxGhost(GhostAgent):
+
+class MinimaxGhost(GhostAgent):
     def __init__(self, index, depth=3):
         GhostAgent.__init__(self, index=index)
-        self.depth=depth
+        self.depth = depth
 
     def getAction(self, state):
+        if random.random() > 0.90:
+            return random.choice(state.getLegalActions(self.index))
         return self.minimax(state, self.depth, self.index)[1]
 
     def minimax(self, gameState, depth, playerIndex):
@@ -63,7 +71,7 @@ class MiniMaxGhost(GhostAgent):
             playerIndex = 0
 
         if ((depth == 0 and playerIndex == self.index) or not gameState.getLegalActions(playerIndex)):
-            return -betterEvaluationFunction(gameState), None
+            return ghostEvanuationFunction(gameState), None
 
         if playerIndex == 0:
             value_actions = [(self.minimax(gameState.generateSuccessor(playerIndex, action),

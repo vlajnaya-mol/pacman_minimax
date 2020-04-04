@@ -180,33 +180,6 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         "*** YOUR CODE HERE ***"
         util.raiseNotDefined()
 
-
-# def betterEvaluationFunction(currentGameState):
-#     def closest_food(cur_pos, food_pos):
-#         food_distances = []
-#         for food in food_pos:
-#             food_distances.append(util.manhattanDistance(food, cur_pos))
-#         return min(food_distances) if len(food_distances) > 0 else 1
-#
-#     def closest_ghost(cur_pos, ghosts):
-#         food_distances = []
-#         for food in ghosts:
-#             food_distances.append(util.manhattanDistance(food.getPosition(), cur_pos))
-#         return min(food_distances) if len(food_distances) > 0 else 1
-#
-#
-#     pacman_pos = currentGameState.getPacmanPosition()
-#     score = currentGameState.getScore()
-#     food = currentGameState.getFood().asList()
-#     ghosts = currentGameState.getGhostStates()
-#
-#
-#     cl_dot = closest_food(pacman_pos, food)
-#     cl_gh = closest_ghost(pacman_pos, ghosts)
-#     score = score * 2 if cl_dot < cl_gh + 3 else score
-#
-#     return score
-
 def betterEvaluationFunction(currentGameState):
     def closest_dot(cur_pos, food_pos):
         food_distances = []
